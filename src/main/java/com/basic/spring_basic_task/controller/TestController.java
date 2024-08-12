@@ -31,12 +31,12 @@ public class TestController {
 
     @GetMapping("/get/all")
     public List<ResponseTestDto> getAllTest(){
-        return testRepository.findTest();
+        return testService.getAll();
     }
 
     @PostMapping("/post")
-    public String addPost(@RequestBody ApiTest apiTest){
-        testRepository.save(apiTest);
+    public String addPost(@RequestBody RequestTestDto requestTestDto){
+        testService.addTest(requestTestDto);
         return "test 등록 완료";
     }
 
@@ -50,20 +50,16 @@ public class TestController {
         return testService.getSome(requestTestDto);
     }
 
-    // 바디에 들어온 값에 따라서 다르게 출력해줄 수 있는 기능 과제 3단계
-    // name or pw 에 특정값을 넣어서 조회하는 법
-//    @GetMapping("/get/some")
-//    public List<Test> getSomeTest(){
-//        return testRepository.someTest();
-//    }
-//    public String getSomeTest(){
-//        return testRepository.someTest();
-//    }
+    // 이거 아이디 넣어서하면 하나 특정해서 가능하니까 그렇게 하지
+    @PutMapping("/put")
+    public int updateTest(@RequestBody RequestTestDto requestTestDto){
+        return testService.updateTestService(requestTestDto);
+    }
 
-
-    // 이미 있는 내용을 수정하는 기능
-
-    // 이미 있는 내용을 삭제하는 기능
+    @DeleteMapping("/delete")
+    public int deleteTest(@RequestBody TestDeleteDto deleteDto){
+        return testService.deleteTestService(deleteDto);
+    }
 
 
 

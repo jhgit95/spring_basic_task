@@ -1,5 +1,7 @@
 package com.basic.spring_basic_task.repository;
 
+import com.basic.spring_basic_task.controller.TestDeleteDto;
+import com.basic.spring_basic_task.dto.RequestTestDto;
 import com.basic.spring_basic_task.dto.ResponseTestDto;
 import com.basic.spring_basic_task.entity.ApiTest;
 //import com.basic.spring_basic_task.entity.Test;
@@ -30,13 +32,13 @@ public class TestRepository {
 
 
 
-    public int save(ApiTest apiTest) {
+    public int save(RequestTestDto requestTestDto) {
         String sql = "INSERT INTO test_table (name,pw) VALUES (?, ?)";
-        System.out.println("Name: " + apiTest.getName() + ", PW: " + apiTest.getPw());
+        System.out.println("Name: " + requestTestDto.getName() + ", PW: " + requestTestDto.getPw());
 
         return jdbcTemplate.update(sql,
-                apiTest.getName(),
-                apiTest.getPw());
+                requestTestDto.getName(),
+                requestTestDto.getPw());
 
     }
 
@@ -75,6 +77,17 @@ public class TestRepository {
             responseTestDto.setPw(rs.getString("pw"));
             return responseTestDto;
         });
+
+    }
+
+    public int updateTest(ApiTest apiTest){
+        String sql = "UPDATE test_table SET pw = ? WHERE name=?";
+        return jdbcTemplate.update(sql, apiTest.getPw(), apiTest.getName());
+    }
+
+    public int deleteTest(TestDeleteDto delete){
+        String sql = "DELETE FROM test_table WHERE id = ?";
+        return jdbcTemplate.update(sql, delete.getId());
 
     }
 

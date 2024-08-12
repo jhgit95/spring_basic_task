@@ -1,6 +1,7 @@
 package com.basic.spring_basic_task.service;
 
 
+import com.basic.spring_basic_task.controller.TestDeleteDto;
 import com.basic.spring_basic_task.dto.RequestTestDto;
 import com.basic.spring_basic_task.dto.ResponseTestDto;
 import com.basic.spring_basic_task.entity.ApiTest;
@@ -19,12 +20,12 @@ public class TestService {
         this.testRepository = testRepository;
     }
 
-    private List<ResponseTestDto> getAll(){
+    public List<ResponseTestDto> getAll(){
         return testRepository.findTest();
     }
 
-    public void addTest(ApiTest test){
-        testRepository.save(test);
+    public void addTest(RequestTestDto requestTestDto){
+        testRepository.save(requestTestDto);
     }
 
 
@@ -49,6 +50,15 @@ public class TestService {
 
 
         }
+    }
+
+    public int updateTestService(RequestTestDto requestTestDto){
+        ApiTest apiTest = new ApiTest(requestTestDto);
+        return testRepository.updateTest(apiTest);
+    }
+
+    public int deleteTestService(TestDeleteDto delete){
+        return testRepository.deleteTest(delete);
     }
 
 
