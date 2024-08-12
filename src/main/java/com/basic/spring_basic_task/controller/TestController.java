@@ -19,14 +19,8 @@ import java.util.List;
 public class TestController {
 
     @Autowired
-    private final TestRepository testRepository;
-    @Autowired
     private TestService testService;
 
-
-    public TestController(TestRepository testRepository) {
-        this.testRepository = testRepository;
-    }
 
 
     @GetMapping("/get/all")

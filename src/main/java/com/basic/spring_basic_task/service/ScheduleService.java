@@ -1,5 +1,7 @@
 package com.basic.spring_basic_task.service;
 
+import com.basic.spring_basic_task.dto.ScheduleAddDto;
+import com.basic.spring_basic_task.dto.ScheduleSingleDto;
 import com.basic.spring_basic_task.entity.Schedule;
 import com.basic.spring_basic_task.repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,13 @@ public class ScheduleService {
         return scheduleRepository.findAll();
     }
 
-    public void addSchedule(Schedule schedule) {
-        scheduleRepository.save(schedule);
+    public int addSchedule(ScheduleAddDto AddDto) {
+        return scheduleRepository.save(AddDto);
     }
+
+    public ScheduleSingleDto getSingleSchedule(int id){
+        return scheduleRepository.getSingleSchedule(id);
+    }
+
+
 }
