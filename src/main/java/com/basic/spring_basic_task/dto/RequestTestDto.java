@@ -5,13 +5,17 @@ import com.basic.spring_basic_task.entity.ApiTest;
 import lombok.Getter;
 
 @Getter
-public class TestDto {
+public class RequestTestDto {
     private String name;
     private String pw;
 
-    public TestDto(ApiTest test){
+    public RequestTestDto(ApiTest test){
         this.name= test.getName();
         this.pw=test.getPw();
+    }
+    public RequestTestDto(String name, String pw){
+        this.name= name;
+        this.pw=pw;
     }
 
 //    public void setTestDto(Test test){

@@ -1,7 +1,8 @@
 package com.basic.spring_basic_task.repository;
 
-import com.basic.spring_basic_task.entity.Schedule;
-import com.basic.spring_basic_task.entity.Test;
+import com.basic.spring_basic_task.dto.ResponseTestDto;
+import com.basic.spring_basic_task.entity.ApiTest;
+//import com.basic.spring_basic_task.entity.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -17,22 +18,63 @@ public class TestRepository {
     }
 
 
-    public List<Test> findTest(){
+    public List<ResponseTestDto> findTest(){
         String sql = "SELECT * FROM test_table";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            Test test = new Test();
-            test.setName(rs.getString("name"));
-            test.setPw(rs.getString("pw"));
-            return test;
+            ResponseTestDto responseTestDto = new ResponseTestDto();
+            responseTestDto.setName(rs.getString("name"));
+            responseTestDto.setPw(rs.getString("pw"));
+            return responseTestDto;
         });
     }
 
 
-    public int save(Test test) {
+
+    public int save(ApiTest apiTest) {
         String sql = "INSERT INTO test_table (name,pw) VALUES (?, ?)";
+        System.out.println("Name: " + apiTest.getName() + ", PW: " + apiTest.getPw());
+
         return jdbcTemplate.update(sql,
-                test.getName(),
-                test.getPw());
+                apiTest.getName(),
+                apiTest.getPw());
+
+    }
+
+    public List<ResponseTestDto> findSingleTest(ApiTest apiTest) {
+        String sql4 = "SELECT * FROM spartaspring.test_table WHERE name=? AND pw=?;";
+
+        // jdbcTemplate.query 메소드를 사용하여 쿼리를 실행하고, 결과를 매핑합니다.
+        return jdbcTemplate.query(sql4, new Object[]{apiTest.getName(), apiTest.getPw()}, (rs, rowNum) -> {
+            ResponseTestDto responseTestDto = new ResponseTestDto();
+            responseTestDto.setName(rs.getString("name"));
+            responseTestDto.setPw(rs.getString("pw"));
+            return responseTestDto;
+        });
+    }
+
+
+
+
+    public List<ResponseTestDto> findPwTest(ApiTest apiTest){
+        String sql= "SELECT * FROM spartaspring.test_table where  pw=?;";
+        return jdbcTemplate.query(sql, new Object[]{apiTest.getPw()}, (rs, rowNum) -> {
+            ResponseTestDto responseTestDto = new ResponseTestDto();
+            responseTestDto.setName(rs.getString("name"));
+            responseTestDto.setPw(rs.getString("pw"));
+            return responseTestDto;
+        });
+    }
+
+
+
+    public List<ResponseTestDto> findNameTest(ApiTest apiTest){
+        String sql = "SELECT * FROM spartaspring.test_table where name=?;";
+        return jdbcTemplate.query(sql, new Object[]{apiTest.getName()}, (rs, rowNum) -> {
+            ResponseTestDto responseTestDto = new ResponseTestDto();
+            responseTestDto.setName(rs.getString("name"));
+            responseTestDto.setPw(rs.getString("pw"));
+            return responseTestDto;
+        });
 
     }
 
@@ -42,7 +84,4 @@ public class TestRepository {
 
 
 
-
-
-
-}
+    }
