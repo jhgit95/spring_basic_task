@@ -1,5 +1,6 @@
 package com.basic.spring_basic_task.service;
 
+import com.basic.spring_basic_task.controller.TestDeleteDto;
 import com.basic.spring_basic_task.dto.*;
 import com.basic.spring_basic_task.entity.Schedule;
 import com.basic.spring_basic_task.repository.ScheduleRepository;
@@ -100,6 +101,9 @@ public class ScheduleService {
 
 
     // 선택한 일정 삭제
+    public int deleteSchedule(ScheduleRequestDto sReqDto){
+        return scheduleRepository.deleteSchedule(sReqDto);
+    }
 
 
 

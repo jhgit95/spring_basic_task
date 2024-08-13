@@ -147,6 +147,10 @@ public class ScheduleRepository {
 
 
     // 선택한 일정 삭제
+    public int deleteSchedule(ScheduleRequestDto sReqDto){
+        String sql = "DELETE FROM schedule WHERE schedule_id = ? and pw = ?";
+        return jdbcTemplate.update(sql, sReqDto.getScheduleId(),sReqDto.getPw());
+    }
 
 
 //    public ScheduleSingleDto getSingleSchedule(int id){

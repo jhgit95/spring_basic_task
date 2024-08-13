@@ -70,7 +70,10 @@ public class ScheduleController {
     }
 
     //선택한 일정 삭제
-
+    @DeleteMapping("/delete")
+    public int deleteTest(@RequestBody ScheduleRequestDto sReqDto){
+        return scheduleService.deleteSchedule(sReqDto);
+    }
 
 
 
