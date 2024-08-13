@@ -5,11 +5,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ScheduleSingleDto {
-    int scheduleId;
+public class ScheduleSearchDto {
+    int schedule_id;
     String assignee;
     String content;
     String reg_date;
     String mod_date;
+
 
 }

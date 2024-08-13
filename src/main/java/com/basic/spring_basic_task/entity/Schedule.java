@@ -1,5 +1,6 @@
 package com.basic.spring_basic_task.entity;
 
+import com.basic.spring_basic_task.dto.ScheduleSearchDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,4 +14,14 @@ public class Schedule{
     private String regDate;
     private String modDate;
 
+    public Schedule(ScheduleSearchDto searchDto) {
+        this.scheduleId=searchDto.getSchedule_id();
+        this.assignee=searchDto.getAssignee();
+        this.content=searchDto.getContent();
+        this.regDate=searchDto.getReg_date();
+        this.modDate=searchDto.getMod_date();
+    }
+    public Schedule( ) {
+
+    }
 }
