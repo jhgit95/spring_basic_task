@@ -5,12 +5,28 @@ import com.basic.spring_basic_task.entity.ApiTest;
 import com.basic.spring_basic_task.entity.Schedule;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Repository
 public class ScheduleRepository {
 
     private final JdbcTemplate jdbcTemplate;
+
+    LocalDateTime now = LocalDateTime.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");  // 포매터 설정
+    String formattedDate = now.format(formatter);  // 현재 날짜를 "yyyy-MM-dd" 형식으로 포매팅
+    public String time(){
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");  // 포매터 설정
+        String formattedDate = now.format(formatter);  // 현재 날짜를 "yyyy-MM-dd" 형식으로 포매팅
+        return formattedDate;
+    }
+
+
+
 
     public ScheduleRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -38,8 +54,8 @@ public class ScheduleRepository {
                 AddDto.getAssignee(),
                 AddDto.getPw(),
                 AddDto.getContent(),
-                AddDto.getRegDate(),
-                AddDto.getRegDate());
+                formattedDate,
+                formattedDate);
 
     }
 
@@ -116,20 +132,20 @@ public class ScheduleRepository {
     // 선택한 일정 수정
     // 할 일만 수정
     public int updateScheduleContent(ScheduleRequestDto sReqDto){
-        String sql = "UPDATE schedule SET content = ? WHERE schedule_id=? and pw=?";
-        return jdbcTemplate.update(sql,sReqDto.getContent(), sReqDto.getScheduleId(), sReqDto.getPw());
+        String sql = "UPDATE schedule SET mod_date=?, content = ? WHERE schedule_id=? and pw=?";
+        return jdbcTemplate.update(sql,formattedDate, sReqDto.getContent(), sReqDto.getScheduleId(), sReqDto.getPw());
     }
 
     // 담당자만 수정
     public int updateScheduleAssignee(ScheduleRequestDto sReqDto){
-        String sql = "UPDATE schedule SET assignee = ? WHERE schedule_id=? and pw=?";
-        return jdbcTemplate.update(sql,sReqDto.getAssignee(), sReqDto.getScheduleId(), sReqDto.getPw());
+        String sql = "UPDATE schedule SET mod_date=?, assignee = ? WHERE schedule_id=? and pw=?";
+        return jdbcTemplate.update(sql,formattedDate, sReqDto.getAssignee(), sReqDto.getScheduleId(), sReqDto.getPw());
     }
 
     // 할 일과 담당자 수정
     public int updateScheduleAssigneeContent(ScheduleRequestDto sReqDto){
-        String sql = "UPDATE schedule SET assignee = ?, content=? WHERE schedule_id=? and pw=?";
-        return jdbcTemplate.update(sql,sReqDto.getAssignee(),sReqDto.getContent(), sReqDto.getScheduleId(), sReqDto.getPw());
+        String sql = "UPDATE schedule SET mod_date=?, assignee = ?, content=? WHERE schedule_id=? and pw=?";
+        return jdbcTemplate.update(sql,formattedDate, sReqDto.getAssignee(),sReqDto.getContent(), sReqDto.getScheduleId(), sReqDto.getPw());
     }
 
     // 스케쥴 id와 pw가 일치하는지 확인하는 기능
