@@ -1,6 +1,7 @@
 package com.basic.spring_basic_task.repository;
 
 import com.basic.spring_basic_task.dto.*;
+import com.basic.spring_basic_task.entity.ApiTest;
 import com.basic.spring_basic_task.entity.Schedule;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -111,6 +112,41 @@ public class ScheduleRepository {
             return sResDto;
         });
     }
+
+    // 선택한 일정 수정
+    // 할 일만 수정
+    public int updateScheduleContent(ScheduleRequestDto sReqDto){
+        String sql = "UPDATE schedule SET content = ? WHERE schedule_id=? and pw=?";
+        return jdbcTemplate.update(sql,sReqDto.getContent(), sReqDto.getScheduleId(), sReqDto.getPw());
+    }
+
+    // 담당자만 수정
+    public int updateScheduleAssignee(ScheduleRequestDto sReqDto){
+        String sql = "UPDATE schedule SET assignee = ? WHERE schedule_id=? and pw=?";
+        return jdbcTemplate.update(sql,sReqDto.getAssignee(), sReqDto.getScheduleId(), sReqDto.getPw());
+    }
+
+    // 할 일과 담당자 수정
+    public int updateScheduleAssigneeContent(ScheduleRequestDto sReqDto){
+        String sql = "UPDATE schedule SET assignee = ?, content=? WHERE schedule_id=? and pw=?";
+        return jdbcTemplate.update(sql,sReqDto.getAssignee(),sReqDto.getContent(), sReqDto.getScheduleId(), sReqDto.getPw());
+    }
+
+    // 스케쥴 id와 pw가 일치하는지 확인하는 기능
+    public int idPwCheck(ScheduleRequestDto sReqDto){
+
+        System.out.println(sReqDto.getScheduleId()+"  "+ sReqDto.getPw());
+        String sql = "SELECT COUNT(*) FROM schedule WHERE schedule_id = ? AND pw = ?";
+        // jdbcTemplate.queryForObject를 사용하여 결과를 Integer로 반환받습니다.
+        return jdbcTemplate.queryForObject(sql, Integer.class, sReqDto.getScheduleId(), sReqDto.getPw());
+    }
+
+    // id로 조회
+
+
+
+
+    // 선택한 일정 삭제
 
 
 //    public ScheduleSingleDto getSingleSchedule(int id){

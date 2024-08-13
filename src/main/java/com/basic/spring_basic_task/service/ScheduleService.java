@@ -1,9 +1,6 @@
 package com.basic.spring_basic_task.service;
 
-import com.basic.spring_basic_task.dto.ScheduleAddDto;
-import com.basic.spring_basic_task.dto.ScheduleResponseDto;
-import com.basic.spring_basic_task.dto.ScheduleSearchDto;
-import com.basic.spring_basic_task.dto.ScheduleSingleDto;
+import com.basic.spring_basic_task.dto.*;
 import com.basic.spring_basic_task.entity.Schedule;
 import com.basic.spring_basic_task.repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
@@ -62,10 +59,57 @@ public class ScheduleService {
 
 
         }
+    }
+
+    // 선택한 일정 수정
+    public int updateSchedule(ScheduleRequestDto sReqDto){
+        System.out.println(scheduleRepository.idPwCheck(sReqDto));
+
+        if(scheduleRepository.idPwCheck(sReqDto)==0){
+            return 500;
+        }
 
 
+
+
+        // 할 일과 담당자 수정
+        if(sReqDto.getContent()!=null && sReqDto.getAssignee()!=null){
+            System.out.println("할 일과 담당자 변경");
+            System.out.println(scheduleRepository.updateScheduleAssigneeContent(sReqDto));
+            return scheduleRepository.updateScheduleAssigneeContent(sReqDto);
+        }
+        // 담당자만 수정
+        else if(sReqDto.getAssignee()!=null){
+            System.out.println("담당자 변경");
+            return scheduleRepository.updateScheduleAssignee(sReqDto);
+
+
+        }
+        // 할 일만 수정
+        else if(sReqDto.getContent()!=null){
+            System.out.println("할 일 변경");
+            return scheduleRepository.updateScheduleContent(sReqDto);
+
+        }
+        else{
+            return 500;
+        }
 
     }
+
+
+
+    // 선택한 일정 삭제
+
+
+
+
+
+
+
+
+
+
 
 
 }

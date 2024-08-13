@@ -1,14 +1,13 @@
 package com.basic.spring_basic_task.controller;
 
-import com.basic.spring_basic_task.dto.ScheduleAddDto;
-import com.basic.spring_basic_task.dto.ScheduleResponseDto;
-import com.basic.spring_basic_task.dto.ScheduleSearchDto;
-import com.basic.spring_basic_task.dto.ScheduleSingleDto;
+import com.basic.spring_basic_task.dto.*;
 import com.basic.spring_basic_task.entity.Schedule;
 import com.basic.spring_basic_task.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -37,6 +36,7 @@ public class ScheduleController {
     // 이 기능 성공하면, 수정에서도 수정한 날짜를 스프링에서 넣어줄 수 있음
     @PostMapping("/post")
     public int addSchedule(@RequestBody ScheduleAddDto AddDto) {
+        System.out.println(scheduleService.addSchedule(AddDto));
         return scheduleService.addSchedule(AddDto);
     }
 
@@ -52,10 +52,24 @@ public class ScheduleController {
         return scheduleService.getScheduleSearch(searchDto);
     }
 
-    // 일정 목록 조회
-    // 특정한 조건으로 조회하기
-//    @GetMapping("/get/search")
-//    public List<>
+    // 선택한 일정 수정
+    // pw랑 id 값이 일치하는 것이 없다면, 비밀번호가 틀리거나 id가 없습니다 라고 보내주자
+    @PutMapping("/get/{id}")
+    public String updateSchedule(@RequestBody ScheduleRequestDto sReqDto){
+        int result = scheduleService.updateSchedule(sReqDto);
+        System.out.println("원래 1이 나왔네"+scheduleService.updateSchedule(sReqDto));
+        if(result==500){
+            return  "틀린 비밀번호 또는 없는 일정입니다.";
+        }
+        if (result == 1) {
+            return "답 = "+scheduleService.getSingleSchedule(sReqDto.getScheduleId()).toString();
+        }
+
+        return "오류가 발생";
+
+    }
+
+    //선택한 일정 삭제
 
 
 
