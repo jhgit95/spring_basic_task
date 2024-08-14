@@ -15,6 +15,10 @@ public class ScheduleRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
+    public ScheduleRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     LocalDateTime now = LocalDateTime.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");  // 포매터 설정
     String formattedDate = now.format(formatter);  // 현재 날짜를 "yyyy-MM-dd" 형식으로 포매팅
@@ -28,9 +32,7 @@ public class ScheduleRepository {
 
 
 
-    public ScheduleRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+
 
     public List<ScheduleResponseDto> findAll() {
         String sql = "SELECT * FROM schedule order by  mod_date desc";
@@ -83,9 +85,9 @@ public class ScheduleRepository {
 
             schedule.setScheduleId(rs.getInt("schedule_id"));
             schedule.setAssignee(rs.getString("assignee"));
-            schedule.setAssignee(rs.getString("content"));
-            schedule.setAssignee(rs.getString("reg_date"));
-            schedule.setAssignee(rs.getString("mod_date"));
+            schedule.setContent(rs.getString("content"));
+            schedule.setRegDate(rs.getString("reg_date"));
+            schedule.setModDate(rs.getString("mod_date"));
 
             ScheduleResponseDto sResDto = new ScheduleResponseDto(schedule);
             return sResDto;
@@ -149,12 +151,12 @@ public class ScheduleRepository {
     }
 
     // 스케쥴 id와 pw가 일치하는지 확인하는 기능
-    public int idPwCheck(ScheduleRequestDto sReqDto){
+    public int idPwCheck(int id, String pw){
 
-        System.out.println(sReqDto.getScheduleId()+"  "+ sReqDto.getPw());
+//        System.out.println(sReqDto.getScheduleId()+"  "+ sReqDto.getPw());
         String sql = "SELECT COUNT(*) FROM schedule WHERE schedule_id = ? AND pw = ?";
         // jdbcTemplate.queryForObject를 사용하여 결과를 Integer로 반환받습니다.
-        return jdbcTemplate.queryForObject(sql, Integer.class, sReqDto.getScheduleId(), sReqDto.getPw());
+        return jdbcTemplate.queryForObject(sql, Integer.class, id, pw);
     }
 
     // id로 조회
