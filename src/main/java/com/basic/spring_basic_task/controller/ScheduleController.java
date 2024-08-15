@@ -31,36 +31,36 @@ public class ScheduleController {
 
     // 할 일 단일 조회
     @GetMapping("/get/{id}")
-    public ScheduleSingleDto getSingleSchedule(@PathVariable int id) {
-        return scheduleService.getSingleSchedule(id);
+    public ResponseEntity<ScheduleSingleDto> getSingleSchedule(@PathVariable int id) {
+        return ResponseEntity.status(200).body(scheduleService.getSingleSchedule(id));
     }
 
 
     // 담당자와 수정일로 검색
     @GetMapping("/get/search")
-    public List<ScheduleResponseDto> getScheduleSearch(@RequestBody ScheduleSearchDto searchDto) {
-        return scheduleService.getScheduleSearch(searchDto);
+    public ResponseEntity<List<ScheduleResponseDto>> getScheduleSearch(@RequestBody ScheduleSearchDto searchDto) {
+        return ResponseEntity.status(200).body(scheduleService.getScheduleSearch(searchDto));
     }
 
 
     // 일정 수정
     @PutMapping("/get/{id}")
-    public String updateSchedule(@RequestBody ScheduleRequestDto sReqDto) {
+    public ResponseEntity<String> updateSchedule(@RequestBody ScheduleRequestDto sReqDto) {
         if (scheduleService.updateSchedule(sReqDto) == 1) {
-            return scheduleService.getSingleSchedule(sReqDto.getScheduleId()).data();
+            return ResponseEntity.status(200).body(scheduleService.getSingleSchedule(sReqDto.getScheduleId()).data());
         } else {
-            return "오류가 발생";
+            return ResponseEntity.status(404).body("알 수 없는 오류 : updateSchedule");
         }
     }
 
 
     //선택한 일정 삭제
     @DeleteMapping("/delete")
-    public String deleteSchedule(@RequestBody ScheduleRequestDto sReqDto) {
+    public ResponseEntity<String> deleteSchedule(@RequestBody ScheduleRequestDto sReqDto) {
         if (scheduleService.deleteSchedule(sReqDto) == 1) {
-            return "삭제 완료";
+            return ResponseEntity.status(200).body("삭제 완료");
         } else {
-            return "알 수 없는 오류 : deleteTest";
+            return ResponseEntity.status(404).body("알 수 없는 오류 : deleteTest");
         }
     }
 
