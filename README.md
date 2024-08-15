@@ -1,7 +1,7 @@
 # 😊  Schedular 😊
 
 ### 📌 프로젝트 설명
-***Spring Personal Task from the NBC***
+***Spring Basic Task from the NBC***
 
 개인 일정을 관리하는 스케쥴러의 백엔드 작성하기
 
