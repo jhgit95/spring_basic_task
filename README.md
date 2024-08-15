@@ -22,7 +22,6 @@
 | 일정 목록 조회 | GET | http://localhost:8080/schedules/get/search |요청 body  |  | 200(성공 상태) |
 | 일정 조회 | GET | http://localhost:8080/schedules/{id} | 요청 param |  | 200(성공 상태) |
 | 일정 수정 | PUT | http://localhost:8080/schedules/get/{id} |요청 body |  | 200(성공 상태) |
-
 | 일정 삭제 | DELETE | http://localhost:8080/schedules/delete |요청 body  |  | 200(성공 상태) |
 
 
