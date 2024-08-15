@@ -68,8 +68,13 @@ public class ScheduleController {
 
     //선택한 일정 삭제
     @DeleteMapping("/delete")
-    public int deleteTest(@RequestBody ScheduleRequestDto sReqDto) {
-        return scheduleService.deleteSchedule(sReqDto);
+    public String deleteSchedule(@RequestBody ScheduleRequestDto sReqDto) {
+        if(scheduleService.deleteSchedule(sReqDto)==1){
+            return "삭제 완료";
+        }
+        else{
+            return "알 수 없는 오류 : deleteTest";
+        }
     }
 
 
@@ -85,9 +90,7 @@ public class ScheduleController {
     // 7단계 : 페이지네이션 남음
     //
 
-    // 서비스
-    // getScheduleSearch 여기에 "" 이거 입력됐는데, 왜 그냥 넘어가지는 거지?
-    //
+
 
     // 내가 만드는 추가 기능
     // 한 담당자가 얼만큼의 일을 가지고 있는지 join해서 가져오는 기능
