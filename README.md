@@ -18,11 +18,11 @@
 ## 📝 API 명세서
 | 기능 | Method | URL | Request | Response | 상태 코드 |
 |:---|:---|:---|:---|:---|:---|
-| 일정 등록 | POST | http://localhost:8080/api/schedules |  |  | 200(성공 상태) |
-| 일정 수정 | PUT | http://localhost:8080/api/schedules/id |  |  | 200(성공 상태) |
-| 일정 조회 | GET | http://localhost:8080/api/schedules/id |  |  | 200(성공 상태) |
-| 일정 목록 조회 | GET | http://localhost:8080/api/schedules |  |  | 200(성공 상태) |
-| 일정 삭제 | DELETE | http://localhost:8080/api/schedules/id |  |  | 200(성공 상태) |
+| 일정 등록 | POST | http://localhost:8080/schedules/post |  |  | 200(성공 상태) |
+| 일정 수정 | PUT | http://localhost:8080/schedules/get/{id} |  |  | 200(성공 상태) |
+| 일정 조회 | GET | http://localhost:8080/schedules/{id} |  |  | 200(성공 상태) |
+| 일정 목록 조회 | GET | http://localhost:8080/schedules/get/search |  |  | 200(성공 상태) |
+| 일정 삭제 | DELETE | http://localhost:8080/schedules/delete |  |  | 200(성공 상태) |
 
 
 ![image](https://github.com/user-attachments/assets/10eae050-d0b1-48df-ad4f-97c85de4a264)
