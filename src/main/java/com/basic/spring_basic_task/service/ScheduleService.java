@@ -102,7 +102,6 @@ public class ScheduleService {
 
     // 선택한 일정 수정 : scheduleId로 특정함
     public int updateSchedule(ScheduleRequestDto sReqDto) {
-//        System.out.println(scheduleRepository.idPwCheck(sReqDto));
 
         if (sReqDto.getScheduleId() == 0) {
             throw new ScheduleException("검색할 일정 id를 입력하세요.");

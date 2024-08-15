@@ -1,7 +1,9 @@
 package com.basic.spring_basic_task.repository;
 
-import com.basic.spring_basic_task.dto.*;
-import com.basic.spring_basic_task.entity.ApiTest;
+import com.basic.spring_basic_task.dto.ScheduleAddDto;
+import com.basic.spring_basic_task.dto.ScheduleRequestDto;
+import com.basic.spring_basic_task.dto.ScheduleResponseDto;
+import com.basic.spring_basic_task.dto.ScheduleSingleDto;
 import com.basic.spring_basic_task.entity.Schedule;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

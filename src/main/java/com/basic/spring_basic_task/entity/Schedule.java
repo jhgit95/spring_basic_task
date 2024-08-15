@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Schedule{
+public class Schedule {
     private int scheduleId;
     private String assignee;
     private String pw;
@@ -15,13 +15,14 @@ public class Schedule{
     private String modDate;
 
     public Schedule(ScheduleSearchDto searchDto) {
-        this.scheduleId=searchDto.getSchedule_id();
-        this.assignee=searchDto.getAssignee();
-        this.content=searchDto.getContent();
-        this.regDate=searchDto.getReg_date();
-        this.modDate=searchDto.getMod_date();
+        this.scheduleId = searchDto.getSchedule_id();
+        this.assignee = searchDto.getAssignee();
+        this.content = searchDto.getContent();
+        this.regDate = searchDto.getReg_date();
+        this.modDate = searchDto.getMod_date();
     }
-    public Schedule( ) {
+
+    public Schedule() {
 
     }
 }
