@@ -54,7 +54,7 @@ public class ScheduleController {
     }
 
 
-    //선택한 일정 삭제
+    // 선택한 일정 삭제
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteSchedule(@RequestBody ScheduleRequestDto sReqDto) {
         if (scheduleService.deleteSchedule(sReqDto) == 1) {
@@ -64,19 +64,28 @@ public class ScheduleController {
         }
     }
 
+    // 페이지네이션
+    @GetMapping("/get/pagination")
+    public List<ScheduleResponseDto> getPaginationSchedules(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size
+    ) {
+        if(page==null){
+            page = 0;
+        }
+        if(size==null){
+            size=10;
+        }
+        System.out.println("page = "+page+", size = "+size);
+        return scheduleService.getPaginationSchedules(page, size);
+    }
 
-    // api명세서, erd 작성
+
+
     // schedule.sql 파일 만드는 법 확인하기
-
-    // 디렉토리
-    // test랑 schedule 이랑 분리시켜주기
 
     // 컨트롤러
     // todo: 9단계(검증)에 @valid 이거 사용 안했음
-    // 담당자 이메일 정보를 확인할 방법?이 어디있지? 일정 가져올 때, 조인해서 담당자 정보도 가져와야 된다는 내용인가?
-    // 7단계 : 페이지네이션 남음
-    //
-
 
     // 내가 만드는 추가 기능
     // 한 담당자가 얼만큼의 일을 가지고 있는지 join해서 가져오는 기능
@@ -87,13 +96,4 @@ public class ScheduleController {
     // 담당자 테이블에 더미 좀 넣고
     // 넣은 데이터랑 스케쥴이랑 매핑해주고
     // 그 다음에 조인문 2개 만들어서 기능 2개 만들어주고
-    // 페이징 해주면 일단 기능은 끝
-
-    // 그럼 이제 문서작업
-    // 리드미 > erd > sql파일 > test 분리
-
-    // 그럼 이제 밀어둔 작업
-    // @valid 이거 안 썼던거 이제 써줘야하고
-
-
 }

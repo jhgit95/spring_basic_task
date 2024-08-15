@@ -22,8 +22,8 @@ public class ScheduleRepository {
     }
 
     LocalDateTime now = LocalDateTime.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");  // 포매터 설정
-    String formattedDate = now.format(formatter);  // 현재 날짜를 "yyyy-MM-dd" 형식으로 포매팅
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    String formattedDate = now.format(formatter);
 
 
     public String time() {
@@ -33,6 +33,10 @@ public class ScheduleRepository {
         return formattedDate;
     }
 
+    public String LikeString(String s){
+        return s=s+"%";
+    }
+
 
     public ScheduleSingleDto getRecentSchedule() {
         String sql = "SELECT * FROM spartaspring.schedule ORDER BY schedule_id DESC LIMIT 1;";
@@ -40,11 +44,13 @@ public class ScheduleRepository {
         // queryForObject 메소드를 사용하여 단일 객체를 조회하고 반환합니다.
         return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
             ScheduleSingleDto singleDto = new ScheduleSingleDto();
+
             singleDto.setScheduleId(rs.getInt("schedule_id"));
             singleDto.setAssignee(rs.getString("assignee"));
             singleDto.setContent(rs.getString("content"));
             singleDto.setReg_date(rs.getString("reg_date"));
             singleDto.setMod_date(rs.getString("mod_date"));
+
             return singleDto;
         });
     }
@@ -53,6 +59,7 @@ public class ScheduleRepository {
         String sql = "SELECT * FROM schedule order by  mod_date desc";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             Schedule schedule = new Schedule();
+
             schedule.setScheduleId(rs.getInt("schedule_id"));
             schedule.setAssignee(rs.getString("assignee"));
             schedule.setPw(rs.getString("pw"));
@@ -82,11 +89,13 @@ public class ScheduleRepository {
         // queryForObject 메소드를 사용하여 단일 객체를 조회하고 반환합니다.
         return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) -> {
             ScheduleSingleDto singleDto = new ScheduleSingleDto();
+
             singleDto.setScheduleId(rs.getInt("schedule_id"));
             singleDto.setAssignee(rs.getString("assignee"));
             singleDto.setContent(rs.getString("content"));
             singleDto.setReg_date(rs.getString("reg_date"));
             singleDto.setMod_date(rs.getString("mod_date"));
+
             return singleDto;
         });
     }
@@ -94,8 +103,9 @@ public class ScheduleRepository {
     // 수정일로 조회
     public List<ScheduleResponseDto> getScheduleSearch(Schedule scd) {
 
-        String sql = "SELECT * FROM schedule WHERE mod_date=? order by  mod_date desc";
-        return jdbcTemplate.query(sql, new Object[]{scd.getModDate()}, (rs, rowNum) -> {
+
+        String sql = "SELECT * FROM schedule WHERE mod_date LIKE ? order by  mod_date desc";
+        return jdbcTemplate.query(sql, new Object[]{LikeString(scd.getModDate())}, (rs, rowNum) -> {
             Schedule schedule = new Schedule();
 
             schedule.setScheduleId(rs.getInt("schedule_id"));
@@ -131,16 +141,18 @@ public class ScheduleRepository {
 
     // 담당자명과 수정일로 조회
     public List<ScheduleResponseDto> getScheduleSearchAssigneeMod(Schedule scd) {
-        String sql = "SELECT * FROM schedule WHERE assignee=? and mod_date=? order by  mod_date desc";
+        String sql = "SELECT * FROM schedule WHERE assignee=? and mod_date LIKE ? order by  mod_date desc";
 
         // queryForObject 메소드를 사용하여 단일 객체를 조회하고 반환합니다.
-        return jdbcTemplate.query(sql, new Object[]{scd.getAssignee(), scd.getModDate()}, (rs, rowNum) -> {
+        return jdbcTemplate.query(sql, new Object[]{scd.getAssignee(), LikeString(scd.getModDate())}, (rs, rowNum) -> {
             Schedule schedule = new Schedule();
+
             schedule.setScheduleId(rs.getInt("schedule_id"));
             schedule.setAssignee(rs.getString("assignee"));
             schedule.setContent(rs.getString("content"));
             schedule.setRegDate(rs.getString("reg_date"));
             schedule.setModDate(rs.getString("mod_date"));
+
             ScheduleResponseDto sResDto = new ScheduleResponseDto(schedule);
             return sResDto;
         });
@@ -183,16 +195,25 @@ public class ScheduleRepository {
         return jdbcTemplate.update(sql, sReqDto.getScheduleId(), sReqDto.getPw());
     }
 
+    // 페이지네이션
+    public List<ScheduleResponseDto> getPaginationSchedules(int page, int size) {
+        System.out.println("page = "+page+", size = "+size);
+        // 계산된 offset을 사용하여 SQL 쿼리를 수행
+        int offset = page * size;
+        String sql = "SELECT * FROM schedule ORDER BY schedule_id ASC LIMIT ? OFFSET ?";
 
-//    public ScheduleSingleDto getSingleSchedule(int id){
-//        String sql4 = "SELECT * FROM spartaspring.test_table WHERE id=?;";
-//
-//        // jdbcTemplate.query 메소드를 사용하여 쿼리를 실행하고, 결과를 매핑합니다.
-//        return jdbcTemplate.query(sql4, Object[]{int id}, (rs, rowNum) -> {
-//            ScheduleSingleDto singleDto = new ResponseTestDto();
-//            singleDto.setAssignee(rs.getString("assignee"));
-//            singleDto.setContent(rs.getString("content"));
-//            return singleDto;
-//        });
-//    }
+        return jdbcTemplate.query(sql, new Object[]{size, offset}, (rs, rowNum) -> {
+                    Schedule schedule = new Schedule();
+                    schedule.setScheduleId(rs.getInt("schedule_id"));
+                    schedule.setAssignee(rs.getString("assignee"));
+                    schedule.setContent(rs.getString("content"));
+                    schedule.setRegDate(rs.getString("reg_date"));
+                    schedule.setModDate(rs.getString("mod_date"));
+
+                    ScheduleResponseDto sResDto = new ScheduleResponseDto(schedule);
+                    return sResDto;
+                }
+        );
+    }
+
 }

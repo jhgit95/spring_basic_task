@@ -148,5 +148,10 @@ public class ScheduleService {
         return scheduleRepository.deleteSchedule(sReqDto);
     }
 
+    // 페이지네이션
+    public List<ScheduleResponseDto> getPaginationSchedules(int page, int size){
+        return scheduleRepository.getPaginationSchedules(page, size);
+    }
+
 
 }
