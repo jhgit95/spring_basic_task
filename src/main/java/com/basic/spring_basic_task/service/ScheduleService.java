@@ -67,7 +67,7 @@ public class ScheduleService {
         }
     }
 
-    // 단일 일정 조회
+    // id로 일정 조회
     public ScheduleSingleDto getSingleSchedule(int id) {
         return scheduleRepository.getSingleSchedule(id);
     }
@@ -98,7 +98,7 @@ public class ScheduleService {
         }
     }
 
-    // id로 단일 조회
+    // 일정 수정
     public int updateSchedule(ScheduleRequestDto sReqDto) {
 
         if (sReqDto.getScheduleId() == 0) {
