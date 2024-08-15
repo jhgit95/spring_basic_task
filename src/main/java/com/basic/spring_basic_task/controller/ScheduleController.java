@@ -24,8 +24,8 @@ public class ScheduleController {
 
     // 일정 등록
     @PostMapping("/post")
-    public ResponseEntity<ScheduleSingleDto> addSchedule(@RequestBody ScheduleAddDto AddDto) {
-        return ResponseEntity.status(200).body(scheduleService.addSchedule(AddDto));
+    public ResponseEntity<ScheduleSingleDto> postSchedule(@RequestBody ScheduleAddDto AddDto) {
+        return ResponseEntity.status(200).body(scheduleService.postSchedule(AddDto));
     }
 
 

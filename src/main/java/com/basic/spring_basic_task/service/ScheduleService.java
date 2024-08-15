@@ -50,7 +50,7 @@ public class ScheduleService {
     }
 
     // 일정 추가
-    public ScheduleSingleDto addSchedule(ScheduleAddDto AddDto) {
+    public ScheduleSingleDto postSchedule(ScheduleAddDto AddDto) {
         // 요청 변수 존재여부 확인
         validateValue(AddDto.getAssignee());
         validateValue(AddDto.getPw());
