@@ -22,21 +22,21 @@ public class ScheduleService {
     // 스트링 변수도 하나 더 받아서 해야할 듯;
     private void validateValue(String value) {
         if (value == null || value.isEmpty()) {
-            throw new ScheduleException("누락된 필수 입력 항목이 있습니다. : validateValue");
+            throw new ScheduleException("누락된 필수 입력 항목이 있습니다. : service.validateValue");
         }
     }
 
     // 할 일의 내용 200글자 제한
     private void validContent(String content) {
         if (content.length() > 200) {
-            throw new ScheduleException("content : 최대 200글자 입력 가능 : validContent");
+            throw new ScheduleException("content : 최대 200글자 입력 가능 : service.validContent");
         }
     }
 
     // id, pw 일치 검증
     private void idPwCheck(int id, String pw) {
         if (scheduleRepository.idPwCheck(id, pw) == 0) {
-            throw new ScheduleException("해당 일정과 pw가 일치하지 않음. : idPwCheck");
+            throw new ScheduleException("해당 일정과 pw가 일치하지 않음. : service.idPwCheck");
         }
     }
 
@@ -63,7 +63,7 @@ public class ScheduleService {
         if (checkInt == 1) {
             return scheduleRepository.getRecentSchedule();
         } else {
-            throw new ScheduleException("알 수 없는 오류 : scheduleService.addSchedule");
+            throw new ScheduleException("알 수 없는 오류 : service.addSchedule");
         }
     }
 
@@ -102,7 +102,7 @@ public class ScheduleService {
     public int updateSchedule(ScheduleRequestDto sReqDto) {
 
         if (sReqDto.getScheduleId() == 0) {
-            throw new ScheduleException("검색할 일정 id를 입력하세요. : updateSchedule");
+            throw new ScheduleException("검색할 일정 id를 입력하세요. : service.updateSchedule");
         }
         validateValue(sReqDto.getPw());
         idPwCheck(sReqDto.getScheduleId(), sReqDto.getPw());
@@ -124,7 +124,7 @@ public class ScheduleService {
             return scheduleRepository.updateScheduleContent(sReqDto);
 
         } else {
-            throw new ScheduleException("변경할 내용을 입력하세요.(담당자 또는 할 일) : updateSchedule");
+            throw new ScheduleException("변경할 내용을 입력하세요.(담당자 또는 할 일) : service.updateSchedule");
         }
     }
 
@@ -134,7 +134,7 @@ public class ScheduleService {
         System.out.println(sReqDto.getScheduleId());
         validateValue(sReqDto.getPw());
         if (sReqDto.getScheduleId() == 0) {
-            throw new ScheduleException("검색할 일정 id를 입력하세요. : deleteSchedule");
+            throw new ScheduleException("검색할 일정 id를 입력하세요. : service.deleteSchedule");
         }
         idPwCheck(sReqDto.getScheduleId(), sReqDto.getPw());
 

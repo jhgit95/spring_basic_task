@@ -49,7 +49,7 @@ public class ScheduleController {
         if (scheduleService.updateSchedule(sReqDto) == 1) {
             return ResponseEntity.status(200).body(scheduleService.getSingleSchedule(sReqDto.getScheduleId()).data());
         } else {
-            return ResponseEntity.status(404).body("알 수 없는 오류 : updateSchedule");
+            return ResponseEntity.status(404).body("알 수 없는 오류 : controller.updateSchedule");
         }
     }
 
@@ -60,7 +60,7 @@ public class ScheduleController {
         if (scheduleService.deleteSchedule(sReqDto) == 1) {
             return ResponseEntity.status(200).body("삭제 완료");
         } else {
-            return ResponseEntity.status(404).body("알 수 없는 오류 : deleteTest");
+            return ResponseEntity.status(404).body("알 수 없는 오류 : controller.deleteSchedule");
         }
     }
 
