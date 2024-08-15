@@ -26,19 +26,23 @@ public class ScheduleService {
         }
     }
 
+    // 할 일의 내용 200글자 제한
     private void validContent(String content) {
         if (content.length() > 200) {
             throw new ScheduleException("content : 최대 200글자 입력 가능");
         }
     }
 
+    // id, pw 일치 검증
     private void idPwCheck(int id, String pw) {
         if (scheduleRepository.idPwCheck(id, pw) == 0) {
             throw new ScheduleException("해당 일정과 pw가 일치하지 않음.");
         }
     }
 
+
     ///////////////// 외부 메서드
+
 
     // 모든 일정 조회
     public List<ScheduleResponseDto> getAllSchedules() {
@@ -61,8 +65,6 @@ public class ScheduleService {
         } else {
             throw new ScheduleException("알 수 없는 오류 : scheduleService.addSchedule");
         }
-
-
     }
 
     // 단일 일정 조회
@@ -70,13 +72,11 @@ public class ScheduleService {
         return scheduleRepository.getSingleSchedule(id);
     }
 
-
-    // 바디에 들어온 값에 따라 조회
+    // 바디에 들어온 값에 따라 조회(담당자, 수정일)
     public List<ScheduleResponseDto> getScheduleSearch(ScheduleSearchDto searchDto) {
 //        return scheduleRepository.getScheduleSearch(searchDto);
         System.out.println(searchDto.getAssignee());
         System.out.println(searchDto.getMod_date());
-
 
         Schedule scd = new Schedule(searchDto);
 
@@ -95,12 +95,10 @@ public class ScheduleService {
         } else {
             System.out.println("둘 다 값이 있을 경우");
             return scheduleRepository.getScheduleSearchAssigneeMod(scd);
-
-
         }
     }
 
-    // 선택한 일정 수정 : scheduleId로 특정함
+    // id로 단일 조회
     public int updateSchedule(ScheduleRequestDto sReqDto) {
 
         if (sReqDto.getScheduleId() == 0) {
@@ -108,7 +106,6 @@ public class ScheduleService {
         }
         validateValue(sReqDto.getPw());
         idPwCheck(sReqDto.getScheduleId(), sReqDto.getPw());
-
 
         // 할 일과 담당자 수정
         if (sReqDto.getContent() != null && sReqDto.getAssignee() != null) {
@@ -120,8 +117,6 @@ public class ScheduleService {
         else if (sReqDto.getAssignee() != null) {
             System.out.println("담당자 변경");
             return scheduleRepository.updateScheduleAssignee(sReqDto);
-
-
         }
         // 할 일만 수정
         else if (sReqDto.getContent() != null) {
@@ -131,9 +126,7 @@ public class ScheduleService {
         } else {
             throw new ScheduleException("변경할 내용을 입력하세요. (담당자 또는 할 일)");
         }
-
     }
-
 
     // 선택한 일정 삭제
     public int deleteSchedule(ScheduleRequestDto sReqDto) {
@@ -149,7 +142,7 @@ public class ScheduleService {
     }
 
     // 페이지네이션
-    public List<ScheduleResponseDto> getPaginationSchedules(int page, int size){
+    public List<ScheduleResponseDto> getPaginationSchedules(int page, int size) {
         return scheduleRepository.getPaginationSchedules(page, size);
     }
 

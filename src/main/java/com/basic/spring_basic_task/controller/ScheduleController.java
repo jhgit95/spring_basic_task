@@ -70,16 +70,15 @@ public class ScheduleController {
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size
     ) {
-        if(page==null){
+        if (page == null) {
             page = 0;
         }
-        if(size==null){
-            size=10;
+        if (size == null) {
+            size = 10;
         }
-        System.out.println("page = "+page+", size = "+size);
+        System.out.println("page = " + page + ", size = " + size);
         return scheduleService.getPaginationSchedules(page, size);
     }
-
 
 
     // schedule.sql 파일 만드는 법 확인하기
