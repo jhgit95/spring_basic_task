@@ -23,3 +23,6 @@
 | 일정 조회 | GET | http://localhost:8080/api/schedules/id |  |  | 200(성공 상태) |
 | 일정 목록 조회 | GET | http://localhost:8080/api/schedules |  |  | 200(성공 상태) |
 | 일정 삭제 | DELETE | http://localhost:8080/api/schedules/id |  |  | 200(성공 상태) |
+
+
+![image](https://github.com/user-attachments/assets/10eae050-d0b1-48df-ad4f-97c85de4a264)
