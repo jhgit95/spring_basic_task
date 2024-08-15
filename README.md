@@ -20,11 +20,11 @@
 ## 📝 API 명세서
 | 기능 | Method | URL | Request | Response | 상태 코드 |
 |:---|:---|:---|:---|:---|:---|
-| 일정 등록 | POST | http://localhost:8080/schedules/post |요청 body  |  | 200(성공 상태) |
-| 일정 목록 조회 | GET | http://localhost:8080/schedules/get/search |요청 body  |  | 200(성공 상태) |
-| 일정 조회 | GET | http://localhost:8080/schedules/{id} | 요청 param |  | 200(성공 상태) |
-| 일정 수정 | PUT | http://localhost:8080/schedules/get/{id} |요청 body |  | 200(성공 상태) |
-| 일정 삭제 | DELETE | http://localhost:8080/schedules/delete |요청 body  |  | 200(성공 상태) |
+| 일정 등록 | POST | http://localhost:8080/schedules/post |요청 body  | 등록된 일정 정보 | 200(성공 상태) |
+| 일정 조회 | GET | http://localhost:8080/schedules/{id} | 요청 param | 선택한 일정 | 200(성공 상태) |
+| 일정 목록 조회 | GET | http://localhost:8080/schedules/get/search |요청 body  | 조건에 맞는 일정 | 200(성공 상태) |
+| 일정 수정 | PUT | http://localhost:8080/schedules/get/{id} |요청 body | 수정된 일정 정보 | 200(성공 상태) |
+| 일정 삭제 | DELETE | http://localhost:8080/schedules/delete |요청 body  | 삭제 결과 | 200(성공 상태) |
 
 
 ![image](https://github.com/user-attachments/assets/0afc7c6e-6401-4203-9097-7c5e595f0eba)
