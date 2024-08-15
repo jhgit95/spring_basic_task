@@ -92,6 +92,29 @@ public class TestRepository {
     }
 
 
+    public List<ResponseTestDto> findTest44(){
+        String sql = "SELECT * FROM test_table";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            ResponseTestDto responseTestDto = new ResponseTestDto();
+            responseTestDto.setName(rs.getString("name"));
+            responseTestDto.setPw(rs.getString("pw"));
+            return responseTestDto;
+        });
+    }
+
+
+    public List<ResponseTestDto> findfind22(){
+        String sql = "SELECT * FROM test_table";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            ResponseTestDto responseTestDto = new ResponseTestDto();
+            responseTestDto.setName(rs.getString("name"));
+            responseTestDto.setPw(rs.getString("pw"));
+            return responseTestDto;
+        });
+    }
+
+
 
 
 

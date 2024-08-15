@@ -12,4 +12,11 @@ public class ScheduleSingleDto {
     String reg_date;
     String mod_date;
 
+    public String data(){
+        return "{ \"scheduleId\": " + this.scheduleId + ", " +
+                "\"assignee\": \"" + this.assignee + "\", " +
+                "\"content\": \"" + this.content + "\", " +
+                "\"regDate\": \"" + this.reg_date + "\", " +
+                "\"modDate\": \"" + this.mod_date + "\" }";
+    }
 }

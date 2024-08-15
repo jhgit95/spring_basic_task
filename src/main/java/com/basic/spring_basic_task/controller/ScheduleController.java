@@ -16,7 +16,7 @@ public class ScheduleController {
     private ScheduleService scheduleService;
 
     @GetMapping("/zz")
-    public String test(){
+    public String test() {
         return "test test test test get zz test ";
     }
 
@@ -29,21 +29,21 @@ public class ScheduleController {
 
     // 일정 등록
     @PostMapping("/post")
-    public ResponseEntity<Integer> addSchedule(@RequestBody ScheduleAddDto AddDto) {
+    public ResponseEntity<ScheduleSingleDto> addSchedule(@RequestBody ScheduleAddDto AddDto) {
 //        System.out.println(scheduleService.addSchedule(AddDto));
         return ResponseEntity.status(200).body(scheduleService.addSchedule(AddDto));
     }
 
     // 할 일 단일 조회
     @GetMapping("/get/{id}")
-    public ScheduleSingleDto getSingleSchedule(@PathVariable int id){
+    public ScheduleSingleDto getSingleSchedule(@PathVariable int id) {
         return scheduleService.getSingleSchedule(id);
 
     }
 
     // 담당자와 수정일로 검색
     @GetMapping("/get/search")
-    public List<ScheduleResponseDto> getScheduleSearch(@RequestBody ScheduleSearchDto searchDto){
+    public List<ScheduleResponseDto> getScheduleSearch(@RequestBody ScheduleSearchDto searchDto) {
         return scheduleService.getScheduleSearch(searchDto);
     }
 
@@ -51,11 +51,11 @@ public class ScheduleController {
     // 일정 수정
     // 바디도 받고 페스베리어블도 받는 방법에 대해서 고민해야 함
     @PutMapping("/get/{id}")
-    public String updateSchedule(@RequestBody ScheduleRequestDto sReqDto){
+    public String updateSchedule(@RequestBody ScheduleRequestDto sReqDto) {
         int result = scheduleService.updateSchedule(sReqDto);
 //        System.out.println("원래 1이 나왔네"+scheduleService.updateSchedule(sReqDto));
-        if(result==500){
-            return  "틀린 비밀번호 또는 없는 일정입니다.";
+        if (result == 500) {
+            return "틀린 비밀번호 또는 없는 일정입니다.";
         }
         if (result == 1) {
             // 그냥 메서드에서 스트링으로 값을 보여주게 하자
@@ -68,21 +68,43 @@ public class ScheduleController {
 
     //선택한 일정 삭제
     @DeleteMapping("/delete")
-    public int deleteTest(@RequestBody ScheduleRequestDto sReqDto){
+    public int deleteTest(@RequestBody ScheduleRequestDto sReqDto) {
         return scheduleService.deleteSchedule(sReqDto);
     }
 
+
+    // api명세서, erd 작성
+    // schedule.sql 파일 만드는 법 확인하기
+
+    // 디렉토리
+    // test랑 schedule 이랑 분리시켜주기
+
     // 컨트롤러
-    // todo: 9단계에 @valid 이거 사용 안했음
-    // 담당자 이메일 정보를 확인할 방법?이 어디있지
-    // 일정 가져올 때, 조인해서 담당자 정보도 가져와야 된다는 내용인가?
-    // 페이지네이션 남음
+    // todo: 9단계(검증)에 @valid 이거 사용 안했음
+    // 담당자 이메일 정보를 확인할 방법?이 어디있지? 일정 가져올 때, 조인해서 담당자 정보도 가져와야 된다는 내용인가?
+    // 7단계 : 페이지네이션 남음
     //
 
     // 서비스
     // getScheduleSearch 여기에 "" 이거 입력됐는데, 왜 그냥 넘어가지는 거지?
     //
 
+    // 내가 만드는 추가 기능
+    // 한 담당자가 얼만큼의 일을 가지고 있는지 join해서 가져오는 기능
+    // 어떤 일의 담당자에 대한 정보를 가져오는 기능
+
+    // 진짜 할 일
+    // 테이블 만들고
+    // 담당자 테이블에 더미 좀 넣고
+    // 넣은 데이터랑 스케쥴이랑 매핑해주고
+    // 그 다음에 조인문 2개 만들어서 기능 2개 만들어주고
+    // 페이징 해주면 일단 기능은 끝
+
+    // 그럼 이제 문서작업
+    // 리드미 > erd > sql파일 > test 분리
+
+    // 그럼 이제 밀어둔 작업
+    // @valid 이거 안 썼던거 이제 써줘야하고
 
 
 }

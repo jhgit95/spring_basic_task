@@ -55,6 +55,11 @@ public class TestController {
         return testService.deleteTestService(deleteDto);
     }
 
+    @GetMapping("/finfinfindfindfind")
+    public List<ResponseTestDto> finfinfinfind2211q(){
+        return testService.find54153();
+    }
+
 
 
 

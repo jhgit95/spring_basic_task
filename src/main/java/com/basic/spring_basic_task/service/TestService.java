@@ -63,6 +63,9 @@ public class TestService {
 
 
 
+    public List<ResponseTestDto> find54153(){
+        return testRepository.findfind22();
+    }
 
 
 
