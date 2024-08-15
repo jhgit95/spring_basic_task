@@ -1,4 +1,4 @@
-# 🗓️ Schedular 
+# 😊  Schedular 😊
 
 ### 📌 프로젝트 설명
 ***Spring Personal Task from the NBC***
@@ -25,4 +25,4 @@
 | 일정 삭제 | DELETE | http://localhost:8080/schedules/delete |  |  | 200(성공 상태) |
 
 
-![image](https://github.com/user-attachments/assets/10eae050-d0b1-48df-ad4f-97c85de4a264)
+![image](https://github.com/user-attachments/assets/0afc7c6e-6401-4203-9097-7c5e595f0eba)
