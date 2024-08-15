@@ -27,5 +27,4 @@
 | 일정 삭제 | DELETE | http://localhost:8080/schedules/delete |요청 body  | 삭제 결과 | 200(성공 상태) |
 | 페이지네이션 | GET | http://localhost:8080/schedules/get/pagination |요청 param  | 페이지네이션 | 200(성공 상태) |
 
-
-![image](https://github.com/user-attachments/assets/0afc7c6e-6401-4203-9097-7c5e595f0eba)
+![image](https://github.com/user-attachments/assets/39c2c688-862a-4546-ade3-b64b6a6e985b)
