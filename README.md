@@ -16,17 +16,73 @@
 *	3 Layer Architecture 에 따라 각 Layer의 목적에 맞게 개발
 
 <br></br>
+---
 
 ## 📝 API 명세서
-| 기능 | Method | URL | Request | Response | 상태 코드 |
-|:---|:---|:---|:---|:---|:---|
-| 일정 등록 | POST | http://localhost:8080/schedules/post |요청 body  | 등록된 일정 정보 | 200(성공 상태) |
-| 일정 조회 | GET | http://localhost:8080/schedules/{id} | 요청 param | 선택한 일정 | 200(성공 상태) |
-| 일정 목록 조회 | GET | http://localhost:8080/schedules/get/search |요청 body  | 조건에 맞는 일정 | 200(성공 상태) |
-| 일정 수정 | PUT | http://localhost:8080/schedules/get/{id} |요청 body | 수정된 일정 정보 | 200(성공 상태) |
-| 일정 삭제 | DELETE | http://localhost:8080/schedules/delete |요청 body  | 삭제 결과 | 200(성공 상태) |
-| 페이지네이션 | GET | http://localhost:8080/schedules/get/pagination |요청 param  | 페이지네이션 | 200(성공 상태) |
+
+#### 일정 등록
+- POST
+-  http://localhost:8080/schedules/post
+
+|  Request | Response | 상태 코드 |
+|:---|:---|:---|
+ |요청 body  | 등록된 일정 정보 | 200 ok |
+ |정보가 누락된 body  | 정보 누락 메세지 | 400 bad request |
 
 <br></br>
+
+#### 일정 조회
+- GET
+-  http://localhost:8080/schedules/{id} 
+
+| Request | Response | 상태 코드 |
+|:---|:---|:---|
+| 요청 param | 선택한 일정 |200 ok |
+
+<br></br>
+
+#### 일정 목록 조회
+- GET
+- http://localhost:8080/schedules/get/search
+
+| Request | Response | 상태 코드 |
+|:---|:---|:---|
+|요청 body  | 조건에 맞는 일정 | 200 ok |
+
+<br></br>
+
+#### 일정 수정
+- PUT
+-  http://localhost:8080/schedules/get/{id} 
+
+ | Request | Response | 상태 코드 |
+|:---|:---|:---|
+ |요청 body | 수정된 일정 정보 |200 ok |
+ |틀린 pw  | 일치하지 않은 pw |400 bad request |
+ |누락된 정보 | 정보 등록 요청 메세지 |400 bad request |
+
+<br></br>
+
+#### 일정 삭제
+- DELETE
+-  http://localhost:8080/schedules/delete
+
+| Request | Response | 상태 코드 |
+|:---|:---|:---|
+ |요청 body  | 삭제 결과 |200 ok |
+ |틀린 pw  | 일치하지 않은 pw |400 bad request|
+
+<br></br>
+
+#### 페이지네이션
+- GET
+- http://localhost:8080/schedules/get/pagination 
+
+ | Request | Response | 상태 코드 |
+|:---|:---|:---|
+ |요청 param  | 페이지네이션 |200 ok |
+
+<br></br>
+---
 ## 📋 ERD
 ![image](https://github.com/user-attachments/assets/39c2c688-862a-4546-ade3-b64b6a6e985b)

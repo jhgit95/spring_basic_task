@@ -8,6 +8,9 @@ CREATE TABLE schedule (
                           mod_date VARCHAR(45) NOT NULL
 );
 
+
+-- 제 프로젝트에서 사용되는 SQL문들을 아래에 적었습니다.
+
 -- 가장 최근에 작성된 글을 조회
 -- SELECT * FROM schedule ORDER BY schedule_id DESC LIMIT 1;
 
