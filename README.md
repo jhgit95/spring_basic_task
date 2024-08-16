@@ -20,7 +20,7 @@
 
 ## 📝 API 명세서
 
-## 일정 등록
+#### 일정 등록
 - POST
 -  http://localhost:8080/schedules/post
 
@@ -31,7 +31,7 @@
 
 <br></br>
 
-## 일정 조회
+#### 일정 조회
 - GET
 -  http://localhost:8080/schedules/{id} 
 
@@ -41,7 +41,7 @@
 
 <br></br>
 
-## 일정 목록 조회
+#### 일정 목록 조회
 - GET
 - http://localhost:8080/schedules/get/search
 
@@ -51,7 +51,7 @@
 
 <br></br>
 
-## 일정 수정
+#### 일정 수정
 - PUT
 -  http://localhost:8080/schedules/get/{id} 
 
@@ -63,7 +63,7 @@
 
 <br></br>
 
-## 일정 삭제
+#### 일정 삭제
 - DELETE
 -  http://localhost:8080/schedules/delete
 
@@ -74,7 +74,7 @@
 
 <br></br>
 
-## 페이지네이션
+#### 페이지네이션
 - GET
 - http://localhost:8080/schedules/get/pagination 
 
