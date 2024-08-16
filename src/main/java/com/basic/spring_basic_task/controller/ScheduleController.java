@@ -79,20 +79,4 @@ public class ScheduleController {
         System.out.println("page = " + page + ", size = " + size);
         return scheduleService.getPaginationSchedules(page, size);
     }
-
-
-    // schedule.sql 파일 만드는 법 확인하기
-
-    // 컨트롤러
-    // todo: 9단계(검증)에 @valid 이거 사용 안했음
-
-    // 내가 만드는 추가 기능
-    // 한 담당자가 얼만큼의 일을 가지고 있는지 join해서 가져오는 기능
-    // 어떤 일의 담당자에 대한 정보를 가져오는 기능
-
-    // 진짜 할 일
-    // 테이블 만들고
-    // 담당자 테이블에 더미 좀 넣고
-    // 넣은 데이터랑 스케쥴이랑 매핑해주고
-    // 그 다음에 조인문 2개 만들어서 기능 2개 만들어주고
 }

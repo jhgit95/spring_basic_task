@@ -26,20 +26,10 @@ public class ScheduleRepository {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     String formattedDate = now.format(formatter);
 
-
-    // 혹시 이 메서드를 사용하는 곳이 있을 것 같아서 만들었음
-    public String time() {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");  // 포매터 설정
-        String formattedDate = now.format(formatter);  // 현재 날짜를 "yyyy-MM-dd" 형식으로 포매팅
-        return formattedDate;
-    }
-
     // SQL 문에서 LIKE를 사용할 수 있게 문자열을 변환하는 기능
     public String LikeString(String s) {
         return s = s + "%";
     }
-
 
     // 가장 최근에 작성된 글을 조회. 할 일 작성 후에 사용됨
     public ScheduleSingleDto getRecentSchedule() {
