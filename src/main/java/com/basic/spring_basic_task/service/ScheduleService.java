@@ -74,9 +74,6 @@ public class ScheduleService {
 
     // 바디에 들어온 값에 따라 조회(담당자, 수정일)
     public List<ScheduleResponseDto> getScheduleSearch(ScheduleSearchDto searchDto) {
-//        return scheduleRepository.getScheduleSearch(searchDto);
-        System.out.println(searchDto.getAssignee());
-        System.out.println(searchDto.getMod_date());
 
         Schedule scd = new Schedule(searchDto);
 
