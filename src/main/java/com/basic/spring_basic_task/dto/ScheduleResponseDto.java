@@ -13,21 +13,11 @@ public class ScheduleResponseDto {
     private String regDate;
     private String modDate;
 
-    public ScheduleResponseDto() {
-
-    }
-
-    public ScheduleResponseDto(ScheduleSearchDto searchDto) {
-
-    }
-
     public ScheduleResponseDto(Schedule schedule) {
-
         this.scheduleId = schedule.getScheduleId();
         this.assignee = schedule.getAssignee();
         this.content = schedule.getContent();
         this.regDate = schedule.getRegDate();
         this.modDate = schedule.getModDate();
-
     }
 }

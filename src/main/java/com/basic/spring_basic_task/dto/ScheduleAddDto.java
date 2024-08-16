@@ -8,14 +8,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ScheduleAddDto {
-    //    private int scheduleId;
     private String assignee;
     private String pw;
     private String content;
     private String regDate;
-//    private String modDate;
-
-//    public ScheduleAddDto(){
-//
-//    }
 }

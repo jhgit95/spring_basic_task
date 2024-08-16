@@ -56,7 +56,8 @@ public class ScheduleController {
 
     // 선택한 일정 삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteSchedule(@RequestBody ScheduleRequestDto sReqDto) {
+    public ResponseEntity<String> deleteSchedule(@PathVariable int id,@RequestBody ScheduleRequestDto sReqDto) {
+        sReqDto.setScheduleId(id);
         if (scheduleService.deleteSchedule(sReqDto) == 1) {
             return ResponseEntity.status(200).body("삭제 완료");
         } else {

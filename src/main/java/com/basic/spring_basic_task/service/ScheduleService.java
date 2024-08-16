@@ -142,6 +142,4 @@ public class ScheduleService {
     public List<ScheduleResponseDto> getPaginationSchedules(int page, int size) {
         return scheduleRepository.getPaginationSchedules(page, size);
     }
-
-
 }

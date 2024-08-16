@@ -11,6 +11,4 @@ public class ScheduleSearchDto {
     String content;
     String reg_date;
     String mod_date;
-
-
 }
