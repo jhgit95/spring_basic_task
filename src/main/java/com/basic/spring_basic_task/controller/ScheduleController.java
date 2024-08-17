@@ -45,7 +45,8 @@ public class ScheduleController {
 
     // 일정 수정
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateSchedule(@RequestBody ScheduleRequestDto sReqDto) {
+    public ResponseEntity<String> updateSchedule(@PathVariable int id, @RequestBody ScheduleRequestDto sReqDto) {
+        sReqDto.setScheduleId(id);
         if (scheduleService.updateSchedule(sReqDto) == 1) {
             return ResponseEntity.status(200).body(scheduleService.getSingleSchedule(sReqDto.getScheduleId()).data());
         } else {
@@ -68,15 +69,9 @@ public class ScheduleController {
     // 페이지네이션
     @GetMapping("/pagination")
     public List<ScheduleResponseDto> getPaginationSchedules(
-            @RequestParam(required = false) Integer page,
-            @RequestParam(required = false) Integer size
+            @RequestParam(required = false,defaultValue = "0") Integer page,
+            @RequestParam(required = false,defaultValue = "10") Integer size
     ) {
-        if (page == null) {
-            page = 0;
-        }
-        if (size == null) {
-            size = 10;
-        }
         System.out.println("page = " + page + ", size = " + size);
         return scheduleService.getPaginationSchedules(page, size);
     }
