@@ -68,14 +68,19 @@ public class ScheduleRepository {
     }
 
     // 할 일 저장
-    public int save(ScheduleAddDto AddDto) {
+    public boolean save(ScheduleAddDto AddDto) {
         String sql = "INSERT INTO schedule (assignee, pw, content, reg_date, mod_date) VALUES (?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(sql,
+        boolean isSave=false;
+        int value = jdbcTemplate.update(sql,
                 AddDto.getAssignee(),
                 AddDto.getPw(),
                 AddDto.getContent(),
                 formattedDate,
                 formattedDate);
+        if(value>0){
+            isSave=true;
+        }
+        return isSave;
     }
 
     // id 값과 일치하는 일정 조회
@@ -206,6 +211,10 @@ public class ScheduleRepository {
                     return sResDto;
                 }
         );
+    }
+
+    public void newUpdateSchedule() {
+
     }
 
 }

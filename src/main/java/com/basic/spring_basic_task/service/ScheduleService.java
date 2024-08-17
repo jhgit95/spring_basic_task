@@ -59,8 +59,8 @@ public class ScheduleService {
         // 할 일 크기 확인
         validContent(AddDto.getContent());
 
-        int checkInt = scheduleRepository.save(AddDto);
-        if (checkInt == 1) {
+        boolean checkInt = scheduleRepository.save(AddDto);
+        if (checkInt) {
             return scheduleRepository.getRecentSchedule();
         } else {
             throw new ScheduleException("알 수 없는 오류 : service.addSchedule");
