@@ -22,7 +22,7 @@
 
 #### 일정 등록
 - POST
--  http://localhost:8080/schedules/post
+-  http://localhost:8080/schedules
 
 |  Request | Response | 상태 코드 |
 |:---|:---|:---|
@@ -43,7 +43,7 @@
 
 #### 일정 목록 조회
 - GET
-- http://localhost:8080/schedules/get/search
+- http://localhost:8080/schedules/search
 
 | Request | Response | 상태 코드 |
 |:---|:---|:---|
@@ -53,7 +53,7 @@
 
 #### 일정 수정
 - PUT
--  http://localhost:8080/schedules/get/{id} 
+-  http://localhost:8080/schedules/{id} 
 
  | Request | Response | 상태 코드 |
 |:---|:---|:---|
@@ -65,7 +65,7 @@
 
 #### 일정 삭제
 - DELETE
--  http://localhost:8080/schedules/delete
+-  http://localhost:8080/schedules/{id}
 
 | Request | Response | 상태 코드 |
 |:---|:---|:---|
@@ -76,7 +76,7 @@
 
 #### 페이지네이션
 - GET
-- http://localhost:8080/schedules/get/pagination 
+- http://localhost:8080/schedules/pagination 
 
  | Request | Response | 상태 코드 |
 |:---|:---|:---|
