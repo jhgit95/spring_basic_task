@@ -85,4 +85,5 @@
 <br></br>
 ---
 ## 📋 ERD
-![image](https://github.com/user-attachments/assets/39c2c688-862a-4546-ade3-b64b6a6e985b)
+![ERD](https://github.com/user-attachments/assets/148685ff-c659-47b4-9831-df6e561a9cce)
+
