@@ -37,6 +37,7 @@ public class ScheduleController {
 
 
     // 담당자와 수정일로 검색
+    // request body : (assignee), (modDate)
     @GetMapping("/search")
     public ResponseEntity<List<ScheduleResponseDto>> getScheduleSearch(@RequestBody ScheduleSearchDto searchDto) {
         return ResponseEntity.status(200).body(scheduleService.getScheduleSearch(searchDto));

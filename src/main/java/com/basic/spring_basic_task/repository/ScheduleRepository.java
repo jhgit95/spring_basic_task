@@ -1,9 +1,6 @@
 package com.basic.spring_basic_task.repository;
 
-import com.basic.spring_basic_task.dto.ScheduleAddDto;
-import com.basic.spring_basic_task.dto.ScheduleRequestDto;
-import com.basic.spring_basic_task.dto.ScheduleResponseDto;
-import com.basic.spring_basic_task.dto.ScheduleSingleDto;
+import com.basic.spring_basic_task.dto.*;
 import com.basic.spring_basic_task.entity.Schedule;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -34,17 +31,20 @@ public class ScheduleRepository {
 
     // 가장 최근에 작성된 글을 조회. 할 일 작성 후에 사용됨
     public ScheduleSingleDto getRecentSchedule() {
-        String sql = "SELECT * FROM spartaspring.schedule ORDER BY schedule_id DESC LIMIT 1;";
+        String sql = "SELECT s.*,a.name,a.assignee_id,a.email FROM schedule as s   INNER JOIN assignee as a " +
+                "ON s.assignee_id = a.assignee_id ORDER BY schedule_id DESC LIMIT 1;";
 
         // queryForObject 메소드를 사용하여 단일 객체를 조회하고 반환합니다.
         return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
             ScheduleSingleDto singleDto = new ScheduleSingleDto();
 
             singleDto.setScheduleId(rs.getInt("schedule_id"));
-            singleDto.setAssignee(rs.getString("assignee"));
+            singleDto.setAssigneeName(rs.getString("name"));
             singleDto.setContent(rs.getString("content"));
             singleDto.setRegDate(rs.getString("reg_date"));
             singleDto.setModDate(rs.getString("mod_date"));
+            singleDto.setAssigneeId(rs.getInt("assignee_id"));
+            singleDto.setEmail(rs.getString("email"));
 
             return singleDto;
         });
@@ -52,48 +52,55 @@ public class ScheduleRepository {
 
     // 모든 할 일 조회
     public List<ScheduleResponseDto> findAll() {
-        String sql = "SELECT * FROM schedule order by  mod_date desc";
+        String sql = "SELECT s.*, a.* " +
+                "FROM schedule AS s " +
+                "INNER JOIN assignee AS a ON s.assignee_id = a.assignee_id " +
+                "order by s.mod_date desc;";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            Schedule schedule = new Schedule();
+
+            ScheduleResponseDto schedule = new ScheduleResponseDto();
 
             schedule.setScheduleId(rs.getInt("schedule_id"));
-            schedule.setAssignee(rs.getString("assignee"));
-            schedule.setPw(rs.getString("pw"));
+            schedule.setAssigneeId(rs.getInt("assignee_id"));
             schedule.setContent(rs.getString("content"));
             schedule.setRegDate(rs.getString("reg_date"));
             schedule.setModDate(rs.getString("mod_date"));
+            schedule.setAssigneeName(rs.getString("name"));
+            schedule.setEmail(rs.getString("email"));
 
-            ScheduleResponseDto sResDto = new ScheduleResponseDto(schedule);
-            return sResDto;
+
+            return schedule;
         });
     }
 
     // 할 일 저장
     public boolean save(ScheduleAddDto AddDto) {
-        String sql = "INSERT INTO schedule (assignee, pw, content, reg_date, mod_date) VALUES (?, ?, ?, ?, ?)";
-        boolean isSave=false;
+        String sql = "INSERT INTO schedule (assignee_id, pw, content, reg_date, mod_date) VALUES (?, ?, ?, ?, ?)";
+        boolean isSave = false;
         int value = jdbcTemplate.update(sql,
-                AddDto.getAssignee(),
+                AddDto.getAssigneeId(),
                 AddDto.getPw(),
                 AddDto.getContent(),
                 formattedDate,
                 formattedDate);
-        if(value>0){
-            isSave=true;
+        if (value > 0) {
+            isSave = true;
         }
         return isSave;
     }
 
     // id 값과 일치하는 일정 조회
     public ScheduleSingleDto getSingleSchedule(int id) {
-        String sql = "SELECT * FROM schedule WHERE schedule_id=?";
+        String sql = "SELECT s.*, a.assignee_id, a.name, a.email FROM schedule as s INNER JOIN assignee as a ON s.assignee_id = a.assignee_id WHERE schedule_id=?";
 
         // queryForObject 메소드를 사용하여 단일 객체를 조회하고 반환합니다.
         return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) -> {
             ScheduleSingleDto singleDto = new ScheduleSingleDto();
 
             singleDto.setScheduleId(rs.getInt("schedule_id"));
-            singleDto.setAssignee(rs.getString("assignee"));
+            singleDto.setAssigneeName(rs.getString("name"));
+            singleDto.setAssigneeId(rs.getInt("assignee_id"));
+            singleDto.setEmail(rs.getString("email"));
             singleDto.setContent(rs.getString("content"));
             singleDto.setRegDate(rs.getString("reg_date"));
             singleDto.setModDate(rs.getString("mod_date"));
@@ -102,90 +109,50 @@ public class ScheduleRepository {
         });
     }
 
-    // 수정일로 조회
-    public List<ScheduleResponseDto> getScheduleSearch(Schedule scd) {
-
-        String sql = "SELECT * FROM schedule WHERE mod_date LIKE ? order by  mod_date desc";
-        return jdbcTemplate.query(sql, new Object[]{LikeString(scd.getModDate())}, (rs, rowNum) -> {
-            Schedule schedule = new Schedule();
-
-            schedule.setScheduleId(rs.getInt("schedule_id"));
-            schedule.setAssignee(rs.getString("assignee"));
-            schedule.setContent(rs.getString("content"));
-            schedule.setRegDate(rs.getString("reg_date"));
-            schedule.setModDate(rs.getString("mod_date"));
-
-            ScheduleResponseDto sResDto = new ScheduleResponseDto(schedule);
-            return sResDto;
-        });
-    }
-
-    // 담당자명으로만 조회
-    public List<ScheduleResponseDto> getScheduleSearchAssignee(Schedule scd) {
-        System.out.println("문제를 파악해보자. 어사이니 = " + scd.getAssignee());
-
-        String sql = "SELECT * FROM schedule WHERE assignee=? order by  mod_date desc";
-        return jdbcTemplate.query(sql, new Object[]{scd.getAssignee()}, (rs, rowNum) -> {
-            Schedule schedule = new Schedule();
-
-            schedule.setScheduleId(rs.getInt("schedule_id"));
-            schedule.setAssignee(rs.getString("assignee"));
-            schedule.setContent(rs.getString("content"));
-            schedule.setRegDate(rs.getString("reg_date"));
-            schedule.setModDate(rs.getString("mod_date"));
-
-            ScheduleResponseDto sResDto = new ScheduleResponseDto(schedule);
-            return sResDto;
-        });
-    }
-
 
     // 담당자명과 수정일로 조회
-    public List<ScheduleResponseDto> getScheduleSearchAssigneeMod(Schedule scd) {
-        String sql = "SELECT * FROM schedule WHERE assignee=? and mod_date LIKE ? order by  mod_date desc";
+    public List<ScheduleResponseDto> getScheduleSearchAssigneeMod(ScheduleSearchDto scd) {
+        StringBuilder sql = new StringBuilder("SELECT s.*, a.name, a.email, a.assignee_id FROM schedule as s " +
+                "INNER JOIN assignee as a ON s.assignee_id = a.assignee_id ");
+        // sql문 안에 넣을 변수 리스트
+        List<Object> params = new ArrayList<>();
+
+
+        if (scd.getAssigneeId() != 0) {
+            sql.append("WHERE s.assignee_id=? ");
+            params.add(scd.getAssigneeId());
+        }
+        if (scd.getModDate() != null) {
+            sql.append("and s.mod_date LIKE ? ");
+            params.add(LikeString(scd.getModDate()));
+        }
+
+        sql.append("order by  mod_date desc");
 
         // queryForObject 메소드를 사용하여 단일 객체를 조회하고 반환합니다.
-        return jdbcTemplate.query(sql, new Object[]{scd.getAssignee(), LikeString(scd.getModDate())}, (rs, rowNum) -> {
-            Schedule schedule = new Schedule();
+        return jdbcTemplate.query(sql.toString(), params.toArray(), (rs, rowNum) -> {
+            ScheduleResponseDto schedule = new ScheduleResponseDto();
 
             schedule.setScheduleId(rs.getInt("schedule_id"));
-            schedule.setAssignee(rs.getString("assignee"));
+            schedule.setAssigneeId(rs.getInt("assignee_id"));
+            schedule.setAssigneeName(rs.getString("name"));
+            schedule.setEmail(rs.getString("email"));
             schedule.setContent(rs.getString("content"));
             schedule.setRegDate(rs.getString("reg_date"));
             schedule.setModDate(rs.getString("mod_date"));
 
-            ScheduleResponseDto sResDto = new ScheduleResponseDto(schedule);
-            return sResDto;
+            return schedule;
         });
     }
 
-
-    // 할 일 수정
-    public int updateScheduleContent(ScheduleRequestDto sReqDto) {
-        String sql = "UPDATE schedule SET mod_date=?, content = ? WHERE schedule_id=? and pw=?";
-        return jdbcTemplate.update(sql, formattedDate, sReqDto.getContent(), sReqDto.getScheduleId(), sReqDto.getPw());
-    }
-
-    // 담당자만 수정
-    public int updateScheduleAssignee(ScheduleRequestDto sReqDto) {
-        String sql = "UPDATE schedule SET mod_date=?, assignee = ? WHERE schedule_id=? and pw=?";
-        return jdbcTemplate.update(sql, formattedDate, sReqDto.getAssignee(), sReqDto.getScheduleId(), sReqDto.getPw());
-    }
-
-    // 할 일과 담당자 수정
-    public int updateScheduleAssigneeContent(ScheduleRequestDto sReqDto) {
-        String sql = "UPDATE schedule SET mod_date=?, assignee = ?, content=? WHERE schedule_id=? and pw=?";
-        return jdbcTemplate.update(sql, formattedDate, sReqDto.getAssignee(), sReqDto.getContent(), sReqDto.getScheduleId(), sReqDto.getPw());
-    }
 
     // 스케쥴 id와 pw가 일치하는지 확인하는 기능. 검증에서 사용됨
     public int idPwCheck(int id, String pw) {
-
         String sql = "SELECT COUNT(*) FROM schedule WHERE schedule_id = ? AND pw = ?";
-
         // jdbcTemplate.queryForObject를 사용하여 결과를 Integer로 반환받습니다.
         return jdbcTemplate.queryForObject(sql, Integer.class, id, pw);
     }
+
 
     // 선택한 일정 삭제
     public int deleteSchedule(ScheduleRequestDto sReqDto) {
@@ -193,23 +160,28 @@ public class ScheduleRepository {
         return jdbcTemplate.update(sql, sReqDto.getScheduleId(), sReqDto.getPw());
     }
 
+
     // 페이지네이션
     public List<ScheduleResponseDto> getPaginationSchedules(int page, int size) {
         System.out.println("page = " + page + ", size = " + size);
         // 계산된 offset을 사용하여 SQL 쿼리를 수행
         int offset = page * size;
-        String sql = "SELECT * FROM schedule ORDER BY schedule_id ASC LIMIT ? OFFSET ?";
+        String sql = "SELECT s.*,a.assignee_id,a.name,a.email FROM schedule as s INNER JOIN assignee as a ON s.assignee_id = a.assignee_id " +
+                "ORDER BY schedule_id ASC LIMIT ? OFFSET ?";
 
         return jdbcTemplate.query(sql, new Object[]{size, offset}, (rs, rowNum) -> {
-                    Schedule schedule = new Schedule();
-                    schedule.setScheduleId(rs.getInt("schedule_id"));
-                    schedule.setAssignee(rs.getString("assignee"));
+                    ScheduleResponseDto schedule = new ScheduleResponseDto();
+
+                    schedule.setAssigneeId(rs.getInt("assignee_id"));
                     schedule.setContent(rs.getString("content"));
                     schedule.setRegDate(rs.getString("reg_date"));
                     schedule.setModDate(rs.getString("mod_date"));
+                    schedule.setModDate(rs.getString("mod_date"));
+                    schedule.setModDate(rs.getString("mod_date"));
+                    schedule.setEmail(rs.getString("email"));
+                    schedule.setAssigneeName(rs.getString("name"));
 
-                    ScheduleResponseDto sResDto = new ScheduleResponseDto(schedule);
-                    return sResDto;
+                    return schedule;
                 }
         );
     }
@@ -228,9 +200,9 @@ public class ScheduleRepository {
             params.add(sReqDto.getContent());
         }
 
-        if (sReqDto.getAssignee() != null) {
-            sql.append(", assignee = ?");
-            params.add(sReqDto.getAssignee());
+        if (sReqDto.getAssigneeId() != 0) {
+            sql.append(", assignee_id = ?");
+            params.add(sReqDto.getAssigneeId());
         }
 
         sql.append(" WHERE schedule_id = ? AND pw = ?");
@@ -238,9 +210,9 @@ public class ScheduleRepository {
         params.add(sReqDto.getPw());
 
         int isUpdate = jdbcTemplate.update(sql.toString(), params.toArray());
-        boolean returnBoolean=false;
-        if(isUpdate>0){
-            returnBoolean=true;
+        boolean returnBoolean = false;
+        if (isUpdate > 0) {
+            returnBoolean = true;
         }
         return returnBoolean;
     }

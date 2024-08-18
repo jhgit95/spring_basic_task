@@ -7,14 +7,17 @@ import lombok.Setter;
 @Setter
 public class ScheduleSingleDto {
     int scheduleId;
-    String assignee;
+    int assigneeId;
+    String assigneeName;
+    String email;
     String content;
     String regDate;
     String modDate;
 
+
     public String data() {
         return "{ \"scheduleId\": " + this.scheduleId + ", " +
-                "\"assignee\": \"" + this.assignee + "\", " +
+                "\"assignee\": \"" + this.assigneeId + "\", " +
                 "\"content\": \"" + this.content + "\", " +
                 "\"regDate\": \"" + this.regDate + "\", " +
                 "\"modDate\": \"" + this.modDate + "\" }";

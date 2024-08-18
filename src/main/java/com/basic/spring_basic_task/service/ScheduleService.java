@@ -20,7 +20,7 @@ public class ScheduleService {
     }
 
     // 스트링 변수도 하나 더 받아서 해야할 듯;
-    private void validateValue(String value) {
+    private void validateString(String value) {
         if (value == null || value.isEmpty()) {
             throw new ScheduleException("누락된 필수 입력 항목이 있습니다. : service.validateValue");
         }
@@ -52,9 +52,9 @@ public class ScheduleService {
     // 일정 추가
     public ScheduleSingleDto postSchedule(ScheduleAddDto AddDto) {
         // 요청 변수 존재여부 확인
-        validateValue(AddDto.getAssignee());
-        validateValue(AddDto.getPw());
-        validateValue(AddDto.getContent());
+//        validateString(AddDto.getAssigneeId());
+        validateString(AddDto.getPw());
+        validateString(AddDto.getContent());
 
         // 할 일 크기 확인
         validContent(AddDto.getContent());
@@ -75,24 +75,11 @@ public class ScheduleService {
     // 바디에 들어온 값에 따라 조회(담당자, 수정일)
     public List<ScheduleResponseDto> getScheduleSearch(ScheduleSearchDto searchDto) {
 
-        Schedule scd = new Schedule(searchDto);
-
-        if ((searchDto.getModDate() == null || searchDto.getModDate().isEmpty()) && (searchDto.getAssignee() == null || searchDto.getAssignee().isEmpty())) {
-            System.out.println("담당자와 수정일이 전부 null");
-            return scheduleRepository.findAll();
-        } else if (searchDto.getModDate() == null || searchDto.getModDate().isEmpty()) {
-            System.out.println("수정일이 null");
-            return scheduleRepository.getScheduleSearchAssignee(scd);
-
-
-        } else if (searchDto.getAssignee() == null || searchDto.getAssignee().isEmpty()) {
-            System.out.println("담당자가 null");
-            return scheduleRepository.getScheduleSearch(scd);
-
-        } else {
-            System.out.println("둘 다 값이 있을 경우");
-            return scheduleRepository.getScheduleSearchAssigneeMod(scd);
+        if(searchDto.getAssigneeId()==0&&searchDto.getModDate()==null){
+            throw new ScheduleException("담당자 또는 수정일을 선택하세요.");
         }
+
+        return scheduleRepository.getScheduleSearchAssigneeMod(searchDto);
     }
 
 
@@ -101,7 +88,7 @@ public class ScheduleService {
     public int deleteSchedule(ScheduleRequestDto sReqDto) {
         System.out.println(sReqDto.getPw());
         System.out.println(sReqDto.getScheduleId());
-        validateValue(sReqDto.getPw());
+        validateString(sReqDto.getPw());
         if (sReqDto.getScheduleId() == 0) {
             throw new ScheduleException("검색할 일정 id를 입력하세요. : service.deleteSchedule");
         }
@@ -120,8 +107,8 @@ public class ScheduleService {
         if (sReqDto.getScheduleId() == 0) {
             throw new ScheduleException("검색할 일정 id를 입력하세요. : service.updateSchedule");
         }
-        validateValue(sReqDto.getPw());
-        if(sReqDto.getAssignee()==null&&sReqDto.getContent()==null){
+        validateString(sReqDto.getPw());
+        if(sReqDto.getAssigneeId()==0&&sReqDto.getContent()==null){
             throw new ScheduleException("담당자 또는 내용 변경을 하세요.");
 
         }

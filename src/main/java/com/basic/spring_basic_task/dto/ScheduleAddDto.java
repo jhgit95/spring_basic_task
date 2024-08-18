@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ScheduleAddDto {
-    private String assignee;
+    private int assigneeId;
     private String pw;
     private String content;
     private String regDate;

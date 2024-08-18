@@ -8,14 +8,19 @@ import lombok.Setter;
 @Setter
 public class ScheduleResponseDto {
     private int scheduleId;
-    private String assignee;
+    private int assigneeId;
+    private String assigneeName;
+    private String email;
     private String content;
     private String regDate;
     private String modDate;
 
+    public ScheduleResponseDto() {
+    }
+
     public ScheduleResponseDto(Schedule schedule) {
         this.scheduleId = schedule.getScheduleId();
-        this.assignee = schedule.getAssignee();
+        this.assigneeName = schedule.getAssignee();
         this.content = schedule.getContent();
         this.regDate = schedule.getRegDate();
         this.modDate = schedule.getModDate();

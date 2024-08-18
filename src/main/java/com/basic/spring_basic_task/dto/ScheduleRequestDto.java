@@ -8,7 +8,7 @@ import lombok.Setter;
 public class ScheduleRequestDto {
     private int scheduleId;
     private String pw;
-    private String assignee;
+    private int assigneeId;
     private String content;
     private String modDate;
 
