@@ -15,11 +15,11 @@ public class Schedule {
     private String modDate;
 
     public Schedule(ScheduleSearchDto searchDto) {
-        this.scheduleId = searchDto.getSchedule_id();
+        this.scheduleId = searchDto.getScheduleId();
         this.assignee = searchDto.getAssignee();
         this.content = searchDto.getContent();
-        this.regDate = searchDto.getReg_date();
-        this.modDate = searchDto.getMod_date();
+        this.regDate = searchDto.getRegDate();
+        this.modDate = searchDto.getModDate();
     }
 
     public Schedule() {

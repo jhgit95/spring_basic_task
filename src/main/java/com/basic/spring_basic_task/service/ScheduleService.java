@@ -77,10 +77,10 @@ public class ScheduleService {
 
         Schedule scd = new Schedule(searchDto);
 
-        if ((searchDto.getMod_date() == null || searchDto.getMod_date().isEmpty()) && (searchDto.getAssignee() == null || searchDto.getAssignee().isEmpty())) {
+        if ((searchDto.getModDate() == null || searchDto.getModDate().isEmpty()) && (searchDto.getAssignee() == null || searchDto.getAssignee().isEmpty())) {
             System.out.println("담당자와 수정일이 전부 null");
             return scheduleRepository.findAll();
-        } else if (searchDto.getMod_date() == null || searchDto.getMod_date().isEmpty()) {
+        } else if (searchDto.getModDate() == null || searchDto.getModDate().isEmpty()) {
             System.out.println("수정일이 null");
             return scheduleRepository.getScheduleSearchAssignee(scd);
 

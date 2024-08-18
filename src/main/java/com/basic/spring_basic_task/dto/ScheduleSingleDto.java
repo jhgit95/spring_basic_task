@@ -9,14 +9,14 @@ public class ScheduleSingleDto {
     int scheduleId;
     String assignee;
     String content;
-    String reg_date;
-    String mod_date;
+    String regDate;
+    String modDate;
 
     public String data() {
         return "{ \"scheduleId\": " + this.scheduleId + ", " +
                 "\"assignee\": \"" + this.assignee + "\", " +
                 "\"content\": \"" + this.content + "\", " +
-                "\"regDate\": \"" + this.reg_date + "\", " +
-                "\"modDate\": \"" + this.mod_date + "\" }";
+                "\"regDate\": \"" + this.regDate + "\", " +
+                "\"modDate\": \"" + this.modDate + "\" }";
     }
 }

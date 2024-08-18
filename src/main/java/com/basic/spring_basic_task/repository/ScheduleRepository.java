@@ -43,8 +43,8 @@ public class ScheduleRepository {
             singleDto.setScheduleId(rs.getInt("schedule_id"));
             singleDto.setAssignee(rs.getString("assignee"));
             singleDto.setContent(rs.getString("content"));
-            singleDto.setReg_date(rs.getString("reg_date"));
-            singleDto.setMod_date(rs.getString("mod_date"));
+            singleDto.setRegDate(rs.getString("reg_date"));
+            singleDto.setModDate(rs.getString("mod_date"));
 
             return singleDto;
         });
@@ -95,8 +95,8 @@ public class ScheduleRepository {
             singleDto.setScheduleId(rs.getInt("schedule_id"));
             singleDto.setAssignee(rs.getString("assignee"));
             singleDto.setContent(rs.getString("content"));
-            singleDto.setReg_date(rs.getString("reg_date"));
-            singleDto.setMod_date(rs.getString("mod_date"));
+            singleDto.setRegDate(rs.getString("reg_date"));
+            singleDto.setModDate(rs.getString("mod_date"));
 
             return singleDto;
         });

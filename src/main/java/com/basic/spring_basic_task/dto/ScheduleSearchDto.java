@@ -6,9 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ScheduleSearchDto {
-    int schedule_id;
+    int scheduleId;
     String assignee;
     String content;
-    String reg_date;
-    String mod_date;
+    String regDate;
+    String modDate;
 }
