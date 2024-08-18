@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -213,8 +214,35 @@ public class ScheduleRepository {
         );
     }
 
-    public void newUpdateSchedule() {
+    public boolean updateSchedule(ScheduleRequestDto sReqDto) {
 
+        StringBuilder sql = new StringBuilder("UPDATE schedule SET mod_date = ?");
+
+        // sql문 안에 넣을 변수 리스트
+        List<Object> params = new ArrayList<>();
+
+        params.add(formattedDate);
+
+        if (sReqDto.getContent() != null) {
+            sql.append(", content = ?");
+            params.add(sReqDto.getContent());
+        }
+
+        if (sReqDto.getAssignee() != null) {
+            sql.append(", assignee = ?");
+            params.add(sReqDto.getAssignee());
+        }
+
+        sql.append(" WHERE schedule_id = ? AND pw = ?");
+        params.add(sReqDto.getScheduleId());
+        params.add(sReqDto.getPw());
+
+        int isUpdate = jdbcTemplate.update(sql.toString(), params.toArray());
+        boolean returnBoolean=false;
+        if(isUpdate>0){
+            returnBoolean=true;
+        }
+        return returnBoolean;
     }
 
 }

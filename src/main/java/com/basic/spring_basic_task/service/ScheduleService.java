@@ -95,35 +95,7 @@ public class ScheduleService {
         }
     }
 
-    // 일정 수정
-    public int updateSchedule(ScheduleRequestDto sReqDto) {
 
-        if (sReqDto.getScheduleId() == 0) {
-            throw new ScheduleException("검색할 일정 id를 입력하세요. : service.updateSchedule");
-        }
-        validateValue(sReqDto.getPw());
-        idPwCheck(sReqDto.getScheduleId(), sReqDto.getPw());
-
-        // 할 일과 담당자 수정
-        if (sReqDto.getContent() != null && sReqDto.getAssignee() != null) {
-            System.out.println("할 일과 담당자 변경");
-            System.out.println(scheduleRepository.updateScheduleAssigneeContent(sReqDto));
-            return scheduleRepository.updateScheduleAssigneeContent(sReqDto);
-        }
-        // 담당자만 수정
-        else if (sReqDto.getAssignee() != null) {
-            System.out.println("담당자 변경");
-            return scheduleRepository.updateScheduleAssignee(sReqDto);
-        }
-        // 할 일만 수정
-        else if (sReqDto.getContent() != null) {
-            System.out.println("할 일 변경");
-            return scheduleRepository.updateScheduleContent(sReqDto);
-
-        } else {
-            throw new ScheduleException("변경할 내용을 입력하세요.(담당자 또는 할 일) : service.updateSchedule");
-        }
-    }
 
     // 선택한 일정 삭제
     public int deleteSchedule(ScheduleRequestDto sReqDto) {
@@ -141,5 +113,21 @@ public class ScheduleService {
     // 페이지네이션
     public List<ScheduleResponseDto> getPaginationSchedules(int page, int size) {
         return scheduleRepository.getPaginationSchedules(page, size);
+    }
+
+    public boolean updateSchedule(ScheduleRequestDto sReqDto){
+
+        if (sReqDto.getScheduleId() == 0) {
+            throw new ScheduleException("검색할 일정 id를 입력하세요. : service.updateSchedule");
+        }
+        validateValue(sReqDto.getPw());
+        if(sReqDto.getAssignee()==null&&sReqDto.getContent()==null){
+            throw new ScheduleException("담당자 또는 내용 변경을 하세요.");
+
+        }
+        idPwCheck(sReqDto.getScheduleId(), sReqDto.getPw());
+
+        return scheduleRepository.updateSchedule(sReqDto);
+
     }
 }

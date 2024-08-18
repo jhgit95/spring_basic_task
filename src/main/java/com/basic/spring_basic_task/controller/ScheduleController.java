@@ -43,18 +43,6 @@ public class ScheduleController {
     }
 
 
-    // 일정 수정
-    @PutMapping("/{id}")
-    public ResponseEntity<String> updateSchedule(@PathVariable int id, @RequestBody ScheduleRequestDto sReqDto) {
-        sReqDto.setScheduleId(id);
-        if (scheduleService.updateSchedule(sReqDto) == 1) {
-            return ResponseEntity.status(200).body(scheduleService.getSingleSchedule(sReqDto.getScheduleId()).data());
-        } else {
-            return ResponseEntity.status(400).body("알 수 없는 오류 : controller.updateSchedule");
-        }
-    }
-
-
     // 선택한 일정 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteSchedule(@PathVariable int id,@RequestBody ScheduleRequestDto sReqDto) {
@@ -74,5 +62,18 @@ public class ScheduleController {
     ) {
         System.out.println("page = " + page + ", size = " + size);
         return scheduleService.getPaginationSchedules(page, size);
+    }
+
+    // 피드백 후 새롭게 만든 수정 기능
+    @PutMapping("/{id}")
+    public  ResponseEntity<String> UpdateSchedule(@PathVariable int id, @RequestBody ScheduleRequestDto sReqDto){
+        sReqDto.setScheduleId(id);
+        boolean isUpdate = scheduleService.updateSchedule(sReqDto);
+        if(isUpdate){
+            return ResponseEntity.status(200).body("수정 완료");
+        }
+        else{
+            return ResponseEntity.status(400).body("알 수 없는 오류 : controller.newUpdateSchedule");
+        }
     }
 }
