@@ -16,14 +16,14 @@ public class ScheduleController {
     private ScheduleService scheduleService;
 
     // 할 일 전부 조회
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<ScheduleResponseDto>> getAllSchedules() {
         return ResponseEntity.status(200).body(scheduleService.getAllSchedules());
     }
 
 
     // 일정 등록
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<ScheduleSingleDto> postSchedule(@RequestBody ScheduleAddDto AddDto) {
         return ResponseEntity.status(200).body(scheduleService.postSchedule(AddDto));
     }
